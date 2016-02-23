@@ -1,14 +1,14 @@
 {
-  "name": "react-redux-universal-hot-example",
-  "description": "Example of an isomorphic (universal) webapp using react redux and hot reloading",
-  "author": "Erik Rasmussen <rasmussenerik@gmail.com> (http://github.com/erikras)",
+  "name": "webapp-starterkit",
+  "description": "Web application starter kit (boilerplate for new projects)",
+  "author": "Kenneth Truong <kenneth.e.truong@gmail.com> (http://github.com/k2truong)",
   "license": "MIT",
-  "version": "0.9.0",
+  "version": "0.0.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/erikras/react-redux-universal-hot-example"
+    "url": "https://github.com/k2truong/webapp-starterkit"
   },
-  "homepage": "https://github.com/erikras/react-redux-universal-hot-example",
+  "homepage": "https://github.com/k2truong/webapp-starterkit",
   "keywords": [
     "react",
     "isomorphic",
