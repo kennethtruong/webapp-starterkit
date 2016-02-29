@@ -1,3 +1,4 @@
+*.sublime-*
 .idea/
 node_modules/
 dist/
