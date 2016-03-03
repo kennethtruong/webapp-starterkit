@@ -7,6 +7,8 @@ const LOGIN_FAIL = 'redux-example/auth/LOGIN_FAIL';
 const LOGOUT = 'redux-example/auth/LOGOUT';
 const LOGOUT_SUCCESS = 'redux-example/auth/LOGOUT_SUCCESS';
 const LOGOUT_FAIL = 'redux-example/auth/LOGOUT_FAIL';
+const SIGNUP = 'redux-example/auth/SIGNUP';
+const SIGNUP_FAIL = 'redux-example/auth/SIGNUP_FAIL';
 
 const initialState = {
   loaded: false
@@ -49,7 +51,7 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         loggingIn: false,
         user: null,
-        loginError: action.error
+        error: action.error
       };
     case LOGOUT:
       return {
@@ -66,7 +68,17 @@ export default function reducer(state = initialState, action = {}) {
       return {
         ...state,
         loggingOut: false,
-        logoutError: action.error
+        error: action.error
+      };
+    case SIGNUP:
+      return {
+        ...state
+      };
+    case SIGNUP_FAIL:
+      return {
+        ...state,
+        loggingIn: false,
+        error: action.error
       };
     default:
       return state;
@@ -84,13 +96,11 @@ export function load() {
   };
 }
 
-export function login(name) {
+export function login(user) {
   return {
     types: [LOGIN, LOGIN_SUCCESS, LOGIN_FAIL],
     promise: (client) => client.post('/login', {
-      data: {
-        name: name
-      }
+      data: user
     })
   };
 }
@@ -99,5 +109,14 @@ export function logout() {
   return {
     types: [LOGOUT, LOGOUT_SUCCESS, LOGOUT_FAIL],
     promise: (client) => client.get('/logout')
+  };
+}
+
+export function signup(user) {
+  return {
+    types: [SIGNUP, LOGIN_SUCCESS, SIGNUP_FAIL],
+    promise: (client) => client.post('/signup', {
+      data: user
+    })
   };
 }

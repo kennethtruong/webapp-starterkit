@@ -31,13 +31,17 @@
     "postinstall": "npm run build",
     "lint": "eslint -c .eslintrc src api",
     "start-dev": "better-npm-run start-dev",
+    "start-debug-api": "better-npm-run start-debug-api",
     "start-dev-api": "better-npm-run start-dev-api",
     "watch-client": "better-npm-run watch-client",
     "dev": "concurrent --kill-others \"npm run watch-client\" \"npm run start-dev\" \"npm run start-dev-api\"",
+    "debug-dev": "concurrent --kill-others \"npm run watch-client\" \"npm run start-dev\" \"npm run start-debug-api\"",
+    "debug-api": "better-npm-run start-debug-brk-api",
     "test": "karma start",
     "test-node": "mocha $(find api -name '*-test.js') --compilers js:babel-core/register",
     "test-node-watch": "mocha $(find api -name '*-test.js') --compilers js:babel-core/register --watch",
-    "win-test-node": "mocha api/__tests__/*-test.js api/*/__tests__/*-test.js --compilers js:babel-core/register"
+    "win-test-node": "mocha api/__tests__/*-test.js api/*/__tests__/*-test.js --compilers js:babel-core/register",
+    "win-test": "mocha api/__tests__/auth-test.js --no-timeouts --compilers js:babel-core/register"
   },
   "betterScripts": {
     "start-prod": {
@@ -74,6 +78,22 @@
         "APIPORT": 3030
       }
     },
+    "start-debug-api": {
+      "command": "node --debug ./bin/api.js",
+      "env": {
+        "NODE_PATH": "./api",
+        "NODE_ENV": "development",
+        "APIPORT": 3030
+      }
+    },
+    "start-debug-brk-api": {
+      "command": "node --debug-brk ./bin/api.js",
+      "env": {
+        "NODE_PATH": "./api",
+        "NODE_ENV": "development",
+        "APIPORT": 3030
+      }
+    },
     "watch-client": {
       "command": "node webpack/webpack-dev-server.js",
       "env": {
@@ -101,6 +121,7 @@
     "babel-preset-stage-0": "^6.3.13",
     "babel-register": "^6.3.13",
     "babel-runtime": "^6.3.19",
+    "bcryptjs": "^2.3.0",
     "body-parser": "^1.14.1",
     "compression": "^1.6.0",
     "express": "^4.13.3",
@@ -113,7 +134,10 @@
     "less-loader": "^2.2.1",
     "lru-memoize": "^1.0.0",
     "map-props": "^1.0.0",
+    "mongoose": "^4.4.5",
     "multireducer": "^2.0.0",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
     "piping": "^0.3.0",
     "pretty-error": "^1.2.0",
     "react": "^0.14.2",
@@ -182,6 +206,7 @@
     "sinon": "^1.17.2",
     "strip-loader": "^0.1.0",
     "style-loader": "^0.13.0",
+    "supertest": "^1.2.0",
     "timekeeper": "0.0.5",
     "webpack": "^1.12.9",
     "webpack-dev-middleware": "^1.4.0",

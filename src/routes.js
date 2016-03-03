@@ -8,7 +8,7 @@ import {
     Widgets,
     About,
     Login,
-    LoginSuccess,
+    Signup,
     Survey,
     NotFound,
   } from 'containers';
@@ -19,7 +19,10 @@ export default (store) => {
       const { auth: { user }} = store.getState();
       if (!user) {
         // oops, not logged in, so can't be here!
-        replace('/');
+        replace({
+          pathname: '/login',
+          state: { nextPathname: nextState.location.pathname }
+        });
       }
       cb();
     }
@@ -42,12 +45,12 @@ export default (store) => {
       { /* Routes requiring login */ }
       <Route onEnter={requireLogin}>
         <Route path="chat" component={Chat}/>
-        <Route path="loginSuccess" component={LoginSuccess}/>
       </Route>
 
       { /* Routes */ }
       <Route path="about" component={About}/>
       <Route path="login" component={Login}/>
+      <Route path="signup" component={Signup}/>
       <Route path="survey" component={Survey}/>
       <Route path="widgets" component={Widgets}/>
 

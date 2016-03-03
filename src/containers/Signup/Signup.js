@@ -1,27 +1,29 @@
 import React, {Component, PropTypes} from 'react';
-import { LinkContainer } from 'react-router-bootstrap';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import Helmet from 'react-helmet';
-import {login} from 'redux/modules/auth';
+import {signup} from 'redux/modules/auth';
 
 @connect(
   state => ({
+    user: state.auth.user,
     error: state.auth.error
   }), {
-    login
+    signup
   })
-export default class Login extends Component {
+export default class Signup extends Component {
   static propTypes = {
     user: PropTypes.object,
-    login: PropTypes.func,
+    signup: PropTypes.func,
     error: PropTypes.object
   }
 
   handleSubmit = (event) => {
     event.preventDefault();
+
     const username = this.refs.username;
     const password = this.refs.password;
-    this.props.login({
+
+    this.props.signup({
       username: username.value,
       password: password.value
     });
@@ -30,30 +32,27 @@ export default class Login extends Component {
 
   render() {
     const {error} = this.props;
-    const styles = require('./Login.scss');
+    const styles = require('./Signup.scss');
     return (
-      <div className={styles.loginPage + ' container'}>
-        <Helmet title="Login"/>
+      <div className={styles.signupPage + ' container'}>
+        <Helmet title="Sign Up"/>
         <div className={styles.card + ' text-center'}>
-          <h1>Log in</h1>
+          <h1>Sign Up</h1>
           {error &&
             <p>{error.message}</p>
           }
           <div>
             <form className="login-form" onSubmit={this.handleSubmit}>
               <div className="form-group">
-                <input type="text" ref="username" placeholder="Username or email" className="form-control"/>
+                <input type="text" ref="username" placeholder="Pick a username" className="form-control"/>
               </div>
               <div className="form-group">
-                <input type="password" ref="password" placeholder="Password" className="form-control"/>
+                <input type="password" ref="password" placeholder="Create a password" className="form-control"/>
               </div>
               <button className="btn btn-lg btn-block btn-primary" onClick={this.handleSubmit}>
-                <i className="fa fa-sign-in"/>{' '}Log In
+                <i className="fa fa-sign-in"/>{' '}Sign Up
               </button>
             </form>
-            <LinkContainer to="/signup">
-              <a href="#">Forgot password?</a>
-            </LinkContainer>
           </div>
         </div>
       </div>

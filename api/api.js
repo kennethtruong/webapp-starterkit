@@ -7,23 +7,43 @@ import {mapUrl} from 'utils/url.js';
 import PrettyError from 'pretty-error';
 import http from 'http';
 import SocketIo from 'socket.io';
+import secrets from './config/secrets.js';
+import passport from 'passport';
+import initPassport from 'passport/init';
+import mongoose from 'mongoose';
 
 const pretty = new PrettyError();
-const app = express();
 
+const app = express();
 const server = new http.Server(app);
 
 const io = new SocketIo(server);
 io.path('/ws');
 
 app.use(session({
-  secret: 'react and redux rule!!!!',
+  secret: secrets.session,
   resave: false,
   saveUninitialized: false,
   cookie: { maxAge: 60000 }
 }));
+
 app.use(bodyParser.json());
 
+mongoose.connect(secrets.db, (err) => {
+  if (err) {
+    console.log('MongoDB ERROR: Could not connect to ' + secrets.db);
+    console.log(err);
+  } else {
+    console.log('==> 💻  Mongoose connected to ' + secrets.db);
+  }
+});
+
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Initialize Passport
+initPassport(passport);
 
 app.use((req, res) => {
   const splittedUrlPath = req.url.split('?')[0].split('/').slice(1);
