@@ -2,26 +2,46 @@ import {expect} from 'chai';
 import supertest from 'supertest';
 import mongoose from 'mongoose';
 import User from '../models/user';
-import secrets from '../config/secrets';
 
 const api = supertest('http://localhost:3030');
 
 describe('Passport: routes', () => {
-  it('should connect to mongoDB', (done) => {
-    mongoose.connect(secrets.db, (err) => {
-      expect(err).to.be.an('undefined');
-      if (err) {
-        done();
-      } else {
-        for (const collection in mongoose.connection.collections) {
-          if (mongoose.connection.collections[collection]) {
-            mongoose.connection.collections[collection].remove(() => {});
-          }
+  let runnable;
+
+  before((done) => {
+    require('../api').then((res) => {
+      runnable = res;
+
+      for (const collection in mongoose.connection.collections) {
+        if (mongoose.connection.collections[collection]) {
+          mongoose.connection.collections[collection].remove(() => {});
         }
-        done();
       }
+
+      done();
     });
   });
+
+  after((done) => {
+    runnable.close(done);
+  });
+
+  // it('should start API server', (done) => {
+  //   require('../api').then((res) => {
+  //     expect(res).to.not.be.a('null');
+
+  //     // runnable = res;
+
+  //     for (const collection in mongoose.connection.collections) {
+  //       if (mongoose.connection.collections[collection]) {
+  //         mongoose.connection.collections[collection].remove(() => {});
+  //       }
+  //     }
+
+  //     done();
+  //   });
+  // });
+
 
   const userInfo = {
     username: 'test1',

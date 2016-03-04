@@ -13,7 +13,7 @@ export default function signup(req) {
         });
       }
 
-      req.logIn(user, (loginErr) => {
+      req.login(user, (loginErr) => {
         if (loginErr) {
           return reject('Issue logging in.');
         }

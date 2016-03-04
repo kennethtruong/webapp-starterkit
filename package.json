@@ -38,10 +38,9 @@
     "debug-dev": "concurrent --kill-others \"npm run watch-client\" \"npm run start-dev\" \"npm run start-debug-api\"",
     "debug-api": "better-npm-run start-debug-brk-api",
     "test": "karma start",
-    "test-node": "mocha $(find api -name '*-test.js') --compilers js:babel-core/register",
-    "test-node-watch": "mocha $(find api -name '*-test.js') --compilers js:babel-core/register --watch",
-    "win-test-node": "mocha api/__tests__/*-test.js api/*/__tests__/*-test.js --compilers js:babel-core/register",
-    "win-test": "mocha api/__tests__/auth-test.js --no-timeouts --compilers js:babel-core/register"
+    "test-node": "better-npm-run test-node",
+    "win-test-node": "better-npm-run win-test-node",
+    "win-test": "better-npm-run win-test"
   },
   "betterScripts": {
     "start-prod": {
@@ -99,6 +98,27 @@
       "env": {
         "UV_THREADPOOL_SIZE": 100,
         "NODE_PATH": "./src"
+      }
+    },
+    "test-node": {
+      "command": "mocha $(find api -name '*-test.js') --compilers js:babel-core/register --no-timeouts",
+      "env": {
+        "NODE_PATH": "./api",
+        "APIPORT": 3030
+      }
+    },
+    "win-test-node": {
+      "command": "mocha api/__tests__/*-test.js api/*/__tests__/*-test.js --compilers js:babel-core/register --no-timeouts",
+      "env": {
+        "NODE_PATH": "./api",
+        "APIPORT": 3030
+      }
+    },
+    "win-test": {
+      "command": "mocha api/__tests__/auth-test.js --no-timeouts --compilers js:babel-core/register",
+      "env": {
+        "NODE_PATH": "./api",
+        "APIPORT": 3030
       }
     },
     "build": {
