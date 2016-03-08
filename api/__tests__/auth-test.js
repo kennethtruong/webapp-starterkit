@@ -26,23 +26,6 @@ describe('Passport: routes', () => {
     runnable.close(done);
   });
 
-  // it('should start API server', (done) => {
-  //   require('../api').then((res) => {
-  //     expect(res).to.not.be.a('null');
-
-  //     // runnable = res;
-
-  //     for (const collection in mongoose.connection.collections) {
-  //       if (mongoose.connection.collections[collection]) {
-  //         mongoose.connection.collections[collection].remove(() => {});
-  //       }
-  //     }
-
-  //     done();
-  //   });
-  // });
-
-
   const userInfo = {
     username: 'test1',
     password: 'test'

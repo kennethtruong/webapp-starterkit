@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import {reduxForm} from 'redux-form';
 import surveyValidation from './surveyValidation';
 
-function asyncValidate(data) {
+const asyncValidate = (data) => {
   // TODO: figure out a way to move this to the server. need an instance of ApiClient
   if (!data.email) {
     return Promise.resolve({});
@@ -22,7 +22,7 @@ function asyncValidate(data) {
       }
     }, 1000);
   });
-}
+};
 
 @reduxForm({
   form: 'survey',
@@ -31,8 +31,7 @@ function asyncValidate(data) {
   asyncValidate,
   asyncBlurFields: ['email']
 })
-export default
-class SurveyForm extends Component {
+export default class SurveyForm extends Component {
   static propTypes = {
     active: PropTypes.string,
     asyncValidating: PropTypes.bool.isRequired,

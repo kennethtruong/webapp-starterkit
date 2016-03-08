@@ -14,3 +14,7 @@
   color: #33e0ff;
   background-color: transparent;
 }
+
+.btn.disabled, .btn[disabled], fieldset[disabled] .btn {
+  cursor: default;
+}

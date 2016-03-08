@@ -1,35 +1,47 @@
-import React, {Component, PropTypes} from 'react';
+import React, { Component, PropTypes } from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
-import {login} from 'redux/modules/auth';
+import { login, destroy } from 'redux/modules/auth';
 
 @connect(
   state => ({
-    error: state.auth.error
+    error: state.auth.error,
+    loading: state.auth.loading
   }), {
-    login
+    login,
+    destroy
   })
 export default class Login extends Component {
   static propTypes = {
-    user: PropTypes.object,
-    login: PropTypes.func,
-    error: PropTypes.object
+    destroy: PropTypes.func.isRequired,
+    error: PropTypes.object,
+    loading: PropTypes.bool,
+    login: PropTypes.func.isRequired,
+    user: PropTypes.object
+  }
+
+  componentWillUnmount() {
+    this.props.destroy();
   }
 
   handleSubmit = (event) => {
-    event.preventDefault();
-    const username = this.refs.username;
-    const password = this.refs.password;
-    this.props.login({
-      username: username.value,
-      password: password.value
-    });
-    password.value = '';
+    if (!this.props.loading) {
+      event.preventDefault();
+
+      const username = this.refs.username;
+      const password = this.refs.password;
+
+      this.props.login({
+        username: username.value,
+        password: password.value
+      });
+      password.value = '';
+    }
   }
 
   render() {
-    const {error} = this.props;
+    const {error, loading} = this.props;
     const styles = require('./Login.scss');
     return (
       <div className={styles.loginPage + ' container'}>
@@ -37,7 +49,7 @@ export default class Login extends Component {
         <div className={styles.card + ' text-center'}>
           <h1>Log in</h1>
           {error &&
-            <p>{error.message}</p>
+            <span>{error.message}</span>
           }
           <div>
             <form className="login-form" onSubmit={this.handleSubmit}>
@@ -47,7 +59,10 @@ export default class Login extends Component {
               <div className="form-group">
                 <input type="password" ref="password" placeholder="Password" className="form-control"/>
               </div>
-              <button className="btn btn-lg btn-block btn-primary" onClick={this.handleSubmit}>
+              <button
+                className={(loading && 'disabled ') + 'btn btn-lg btn-block btn-primary'}
+                onClick={this.handleSubmit}
+              >
                 <i className="fa fa-sign-in"/>{' '}Log In
               </button>
             </form>

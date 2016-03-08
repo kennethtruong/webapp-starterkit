@@ -152,7 +152,6 @@
     "invariant": "^2.2.0",
     "less": "^2.5.3",
     "less-loader": "^2.2.1",
-    "lru-memoize": "^1.0.0",
     "map-props": "^1.0.0",
     "mongoose": "^4.4.5",
     "multireducer": "^2.0.0",
@@ -183,7 +182,7 @@
     "webpack-isomorphic-tools": "^2.2.18"
   },
   "devDependencies": {
-    "autoprefixer-loader": "^3.1.0",
+    "autoprefixer": "^6.3.3",
     "babel-eslint": "^5.0.0-beta6",
     "babel-plugin-react-transform": "^2.0.0",
     "babel-plugin-typecheck": "^3.6.0",
@@ -214,6 +213,7 @@
     "node-sass": "^3.4.2",
     "phantomjs": "^1.9.18",
     "phantomjs-polyfill": "0.0.1",
+    "postcss-loader": "^0.8.1",
     "react-a11y": "^0.2.6",
     "react-addons-test-utils": "^0.14.0",
     "react-transform-catch-errors": "^1.0.0",

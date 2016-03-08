@@ -9,6 +9,7 @@ const LOGOUT_SUCCESS = 'redux-example/auth/LOGOUT_SUCCESS';
 const LOGOUT_FAIL = 'redux-example/auth/LOGOUT_FAIL';
 const SIGNUP = 'redux-example/auth/SIGNUP';
 const SIGNUP_FAIL = 'redux-example/auth/SIGNUP_FAIL';
+const DESTROY = 'redux-example/auth/DESTROY';
 
 const initialState = {
   loaded: false
@@ -80,6 +81,11 @@ export default function reducer(state = initialState, action = {}) {
         loggingIn: false,
         error: action.error
       };
+    case DESTROY:
+      return {
+        ...state,
+        error: undefined
+      };
     default:
       return state;
   }
@@ -118,5 +124,11 @@ export function signup(user) {
     promise: (client) => client.post('/signup', {
       data: user
     })
+  };
+}
+
+export function destroy() {
+  return {
+    type: DESTROY
   };
 }

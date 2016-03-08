@@ -1,20 +1,26 @@
-import React, {Component, PropTypes} from 'react';
-import {connect} from 'react-redux';
+import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
-import {signup} from 'redux/modules/auth';
+import { signup, destroy } from 'redux/modules/auth';
 
 @connect(
   state => ({
     user: state.auth.user,
     error: state.auth.error
   }), {
-    signup
+    signup,
+    destroy
   })
 export default class Signup extends Component {
   static propTypes = {
-    user: PropTypes.object,
-    signup: PropTypes.func,
-    error: PropTypes.object
+    destroy: PropTypes.func.isRequired,
+    error: PropTypes.object,
+    signup: PropTypes.func.isRequired,
+    user: PropTypes.object
+  }
+
+  componentWillUnmount() {
+    this.props.destroy();
   }
 
   handleSubmit = (event) => {
